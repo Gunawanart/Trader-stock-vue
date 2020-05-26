@@ -13,6 +13,9 @@
         </router-link>
       </ul>
       <ul class="navbar-nav mr-auto ml-auto">
+        <router-link to="#" tag="li" active-class="active" class="nav-item">
+          <a class="nav-link">End Day</a>
+        </router-link>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
