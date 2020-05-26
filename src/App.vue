@@ -1,11 +1,21 @@
 <template>
   <div class="container">
-    <router-view></router-view>
+    <app-header></app-header>
+    <div class="row">
+      <div class="col-xs-12">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import header from "./components/header.vue";
+export default {
+  components: {
+    appHeader: header
+  }
+};
 </script>
 
 <style>
