@@ -13,10 +13,11 @@
         </div>
         <div class="float-right">
           <button
+            :class="{danger : sellCheck}"
             class="btn btn-success"
             @click="sellStockFunc"
-            :disabled="quantity <= 0 || !Number.isInteger(+quantity)"
-          >SELL</button>
+            :disabled="quantity <= 0 || !Number.isInteger(+quantity) || sellCheck"
+          >{{ sellCheck ? 'Not Enough Quanity' : 'SELL' }}</button>
         </div>
       </div>
     </div>
@@ -43,6 +44,21 @@ export default {
       this.sellStock(order);
       this.quantity = 0;
     }
+  },
+  computed: {
+    sellCheck() {
+      if (this.quantity <= this.stock.quantity) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 };
 </script>
+
+<style scoped>
+.danger {
+  background-color: red;
+}
+</style>

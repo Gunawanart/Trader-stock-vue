@@ -14,9 +14,10 @@
         <div class="float-right">
           <button
             class="btn btn-success"
+            :class="{danger : fundsCheck}"
             @click="buyStock"
-            :disabled="quantity <= 0 || !Number.isInteger(+quantity)"
-          >BUY</button>
+            :disabled="quantity <= 0 || !Number.isInteger(+quantity) || fundsCheck"
+          >{{ fundsCheck ? 'Insufficient fund' : 'BUY' }}</button>
         </div>
       </div>
     </div>
@@ -42,6 +43,22 @@ export default {
       this.$store.dispatch("buyStock", order);
       this.quantity = 0;
     }
+  },
+  computed: {
+    fundsCheck: function() {
+      let a = this.$store.getters.funds;
+      if (a < this.stock.price * this.quantity) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>
+
+<style scoped>
+.danger {
+  background-color: red;
+}
+</style>
