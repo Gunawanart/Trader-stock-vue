@@ -1,18 +1,22 @@
 <template>
-  <div class="col-sm-6 col-md-4">
-    <div class="panel panel-succes">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          Name
-          <small>(Price : Price)</small>
+  <div style="margin-bottom:20px;">
+    <div class="card">
+      <div class="card-header text-success">
+        <h3 class="card-title">
+          {{ stock.name }}
+          <small>Price : {{ stock.price }} | Quantity : {{ stock.quantity }}</small>
         </h3>
       </div>
-      <div class="panel-body">
-        <div class="pull-left">
-          <input type="number" class="form-control" placeholder="Quantity" />
+      <div class="card-body">
+        <div class="float-left">
+          <input type="number" placeholder="Quantity" class="form-control" v-model="quantity" />
         </div>
-        <div class="pull-right">
-          <button class="btn btn-succes">BUY</button>
+        <div class="float-right">
+          <button
+            class="btn btn-success"
+            @click="sellStockFunc"
+            :disabled="quantity <= 0 || !Number.isInteger(+quantity)"
+          >SELL</button>
         </div>
       </div>
     </div>
@@ -20,5 +24,25 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+export default {
+  props: ["stock"],
+  data() {
+    return {
+      quantity: 0
+    };
+  },
+  methods: {
+    ...mapActions(["sellStock"]),
+    sellStockFunc() {
+      const order = {
+        stockId: this.stock.id,
+        stockPrice: this.stock.price,
+        stockQuantity: this.quantity
+      };
+      this.sellStock(order);
+      this.quantity = 0;
+    }
+  }
+};
 </script>
